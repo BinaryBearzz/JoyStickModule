@@ -46,16 +46,53 @@ void Joystick::begin()
 
 int Joystick::est_horizontal()
 {
-    
+    int a = -1;
+    switch (position.x)
+    {
+        case 0 ... 3:
+            a = 1;
+            break;
+        case 4 ... 6:
+            a = 2;
+            break;  
+        case 7 ... 10:
+            a = 3;
+            break;   
+        default:
+            a = -1;
+            break;
+    }
+    return a;
 }
 
 int Joystick::est_vertical()
 {
-
+    int a = -1;
+    switch (position.y)
+    {
+        case 0 ... 3:
+            a = 1;
+            break;
+        case 4 ... 6:
+            a = 2;
+            break;  
+        case 7 ... 10:
+            a = 3;
+            break;   
+        default:
+            a = -1;
+            break;
+    }
+    return a;
 }
 
 void Joystick::handle()
 {
-    position.x = map((analogRead(pinX)/4), 0, 1024, 0, 10);
-    position.y = map((analogRead(pinY)/4), 0, 1024, 0, 10);
+    int aPinX = analogRead(pinX);
+    int aPinY = analogRead(pinY);
+    // Serial.println("pinX: "+String(aPinX));
+    // Serial.println("pinY: "+String(aPinY));
+    position.x = map((aPinX), 0, 4096, 0, 10);
+    position.y = map((aPinY), 0, 4096, 0, 10);
 }
+

@@ -23,9 +23,10 @@ class Joystick
         int offset_y_max;
         int offset_x_center;
         int offset_y_center;
+
+    public:
         int est_horizontal();
         int est_vertical();
-    public:
         Joystick(int pinVRX = -1, int pinVRY = -1, int SW = -1);
         void offsetPosition(int x_min, int x_max, int y_min, int y_max, int x_center, int y_center);
         void begin();  
