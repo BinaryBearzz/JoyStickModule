@@ -4,10 +4,7 @@
 class joy_attibute
 {
 private:
-    /* data */
 public:
-    joy_attibute(/* args */);
-    ~joy_attibute();
 };
 
 #endif
