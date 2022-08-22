@@ -1,5 +1,15 @@
 #include <Arduino.h>
 #include <Joystick.h>
+onLeft _Event_L;
+onRight _Event_R;
+onUp _Event_U;
+onDown _Event_D;
+onSW _Event_SW;
+
+onUpLeft _Event_UL;
+onUpRight _Event_UR;
+onDownLeft _Event_DL;
+onDownRight _Event_DR;
 
 Joystick::Joystick(int pinVRX, int pinVRY, int SW)
 {
@@ -12,6 +22,15 @@ Joystick::Joystick(int pinVRX, int pinVRY, int SW)
     offset_y_max;
     offset_x_center;
     offset_y_center;
+    _Event_L = NULL;
+    _Event_R = NULL;
+    _Event_U = NULL;
+    _Event_D = NULL;
+    _Event_SW = NULL;
+    _Event_DL = NULL;
+    _Event_DR = NULL;
+    _Event_UL = NULL;
+    _Event_UR = NULL;
 } 
 
 void Joystick::offsetPosition(int x_min, int x_max, int y_min, int y_max, int x_center, int y_center)
@@ -38,7 +57,7 @@ void Joystick::begin()
     }
     if(pinSW > 0)
     {
-        pinMode(pinSW, INPUT);
+        pinMode(pinSW, INPUT_PULLUP);
         Serial.println("# Set pinSW: "+String(pinSW));
     }
 
@@ -46,20 +65,20 @@ void Joystick::begin()
 
 int Joystick::est_horizontal()
 {
-    int a = -1;
+    int a = 2;
     switch (position.x)
     {
-        case 0 ... 3:
-            a = 1;
+        case -6 ... -4:
+            a = 1; //Left
             break;
-        case 4 ... 6:
-            a = 2;
+        case -2 ... 2:
+            a = 2; //idle
             break;  
-        case 7 ... 10:
-            a = 3;
+        case 4 ... 6:
+            a = 3; //Right
             break;   
         default:
-            a = -1;
+            a = 2;
             break;
     }
     return a;
@@ -67,32 +86,196 @@ int Joystick::est_horizontal()
 
 int Joystick::est_vertical()
 {
-    int a = -1;
+    int a = 2;
     switch (position.y)
     {
-        case 0 ... 3:
-            a = 1;
+        case -6 ... -4:
+            a = 1; //down
             break;
-        case 4 ... 6:
-            a = 2;
+        case -2 ... 2:
+            a = 2; //idle
             break;  
-        case 7 ... 10:
-            a = 3;
+        case 4 ... 6:
+            a = 3; //up
             break;   
         default:
-            a = -1;
+            a = 2; 
             break;
     }
     return a;
 }
 
+void Joystick::mapping_Direction(int h, int v)
+{
+    int est_h = h;
+    int est_v = v; 
+    if(est_h == 1 && est_v == 2)
+    {
+        direction.dir = "Left";
+        if(_Event_L != NULL)
+          _Event_L();
+    }
+    else if (est_h == 2 && est_v == 2)
+    {
+        direction.dir = "center";
+    }
+    else if (est_h == 3 && est_v == 2)
+    {
+        direction.dir = "Right";
+        if(_Event_R != NULL)
+            _Event_R();
+    }
+    else if(est_h == 2 && est_v == 1)
+    {
+        direction.dir = "Down";
+        if(_Event_D != NULL)
+            _Event_D();
+    }
+    else if(est_h == 2 && est_v == 3)
+    {
+        direction.dir = "Up";
+        if(_Event_U != NULL)
+            _Event_U();
+    }
+    else if(est_h == 1 && est_v == 1)
+    {
+        direction.dir = "DownLeft";
+        if(_Event_DL != NULL)
+            _Event_DL();
+    }
+    else if(est_h == 3 && est_v == 1)
+    {
+        direction.dir = "DownRight";
+        if(_Event_DR != NULL)
+            _Event_DR();
+    }
+    else if(est_h == 1 && est_v == 3)
+    {
+        direction.dir = "UpLeft";
+        if(_Event_UL != NULL)
+            _Event_UL();
+    }
+    else if(est_h == 3 && est_v == 3)
+    {
+        direction.dir = "UpRight";
+        if(_Event_UR != NULL)
+            _Event_UR();
+    }
+}
+
+void Joystick::onEvent_Left(onLeft funcEventLeft)
+{
+    _Event_L = funcEventLeft;
+}
+void Joystick::onEvent_Right(onRight funcEventRight)
+{
+    _Event_R = funcEventRight;
+}
+void Joystick::onEvent_Up(onUp funcEventUp)
+{
+    _Event_U = funcEventUp;
+}
+void Joystick::onEvent_Down(onDown funcEventDown)
+{
+    _Event_D = funcEventDown;
+}
+
+void Joystick::onEvent_SW(onSW funcEventSW)
+{
+    _Event_SW = funcEventSW;
+}
+
+void Joystick::onEvent_UpLeft(onUpLeft funcEventUpLeft)
+{
+    _Event_UL = funcEventUpLeft;
+}
+void Joystick::onEvent_UpRight(onUpRight funcEventUpRight)
+{
+    _Event_UR = funcEventUpRight;
+}
+void Joystick::onEvent_DownLeft(onDownLeft funcEventDownLeft)
+{
+    _Event_DL = funcEventDownLeft;
+}
+void Joystick::onEvent_DonwRight(onDownRight funcEventDownRight)
+{
+    _Event_DR = funcEventDownRight;
+}
+
+void Joystick::onEvent(onLeft funcEventLeft, onRight funcEventRight, onUp funcEventUp, onDown funcEventDown, onSW funcEventSW)
+{
+    if(funcEventLeft != NULL)
+        _Event_L = funcEventLeft;
+    if(funcEventRight != NULL)
+        _Event_R = funcEventRight;
+    if(funcEventUp!= NULL)
+        _Event_U = funcEventUp;
+    if(funcEventDown != NULL)
+        _Event_D = funcEventDown;
+    if(funcEventSW != NULL)
+        _Event_SW = funcEventSW;
+}
 void Joystick::handle()
 {
     int aPinX = analogRead(pinX);
     int aPinY = analogRead(pinY);
     // Serial.println("pinX: "+String(aPinX));
     // Serial.println("pinY: "+String(aPinY));
-    position.x = map((aPinX), 0, 4096, 0, 10);
-    position.y = map((aPinY), 0, 4096, 0, 10);
+    position.x = map((aPinX), 0, 4096, -6, 6);
+    position.y = map((aPinY), 0, 4096, -6, 6);
+    // Serial.println("(x, y): "+String(position.x)+":"+String(position.y));
+    int est_h = est_horizontal();
+    int est_v = est_vertical(); 
+
+    mapping_Direction(est_h, est_v);
+    if(pinSW > 0)
+    {
+        currentStateSW = digitalRead(pinSW);
+        if (lastStateSW == HIGH && currentStateSW == LOW)
+        {
+            if(_Event_SW != NULL)
+            {
+                _Event_SW(true);
+            }
+        }
+        // Serial.println("The button is pressed");
+        else if (lastStateSW == LOW && currentStateSW == HIGH)
+        {
+            if(_Event_SW != NULL)
+            {
+                _Event_SW(false);
+            }
+        }
+        // Serial.println("The button is released");
+        lastStateSW = currentStateSW;
+    }
+    // if(est_h == 1)
+    // {
+    //     if(_Event_L != NULL)
+    //         _Event_L();
+    // }
+    // else if(est_h == 3)
+    // {
+    //     if(_Event_R != NULL)
+    //         _Event_R();
+    // }
+
+    // if(est_v == 1)
+    // {
+    //     if(_Event_D != NULL)
+    //         _Event_D();
+    // }
+    // else if(est_v == 3)
+    // {
+    //     if(_Event_U != NULL)
+    //         _Event_U();
+    // }
+    // if(sw_ == 1)
+    // {
+    //     if(_Event_SW != NULL)
+    //         _Event_SW();        
+    // }
+
 }
+
 
