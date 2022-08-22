@@ -16,12 +16,6 @@ Joystick::Joystick(int pinVRX, int pinVRY, int SW)
     pinX = pinVRX;
     pinY = pinVRY;
     pinSW = SW;
-    offset_x_min;
-    offset_x_max;
-    offset_y_min;
-    offset_y_max;
-    offset_x_center;
-    offset_y_center;
     _Event_L = NULL;
     _Event_R = NULL;
     _Event_U = NULL;
@@ -32,16 +26,6 @@ Joystick::Joystick(int pinVRX, int pinVRY, int SW)
     _Event_UL = NULL;
     _Event_UR = NULL;
 } 
-
-void Joystick::offsetPosition(int x_min, int x_max, int y_min, int y_max, int x_center, int y_center)
-{
-    offset_x_min = x_min;
-    offset_x_max = x_max;
-    offset_y_min = y_min;
-    offset_y_max = y_max;
-    offset_x_center = x_center;
-    offset_y_center = y_center;
-}
 
 void Joystick::begin()
 {
