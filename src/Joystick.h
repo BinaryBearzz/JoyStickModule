@@ -19,7 +19,8 @@ struct POSITION{
     int y;
 };
 struct DIRECTION{
-    String dir;
+    String dir = "None";
+    String last_dir = "None";
 };
 class Joystick
 {

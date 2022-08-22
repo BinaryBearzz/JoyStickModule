@@ -112,55 +112,85 @@ void Joystick::mapping_Direction(int h, int v)
     if(est_h == 1 && est_v == 2)
     {
         direction.dir = "Left";
-        if(_Event_L != NULL)
-          _Event_L();
+        if(_Event_L != NULL && direction.last_dir != "Left")
+        {
+            _Event_L();
+            direction.last_dir = direction.dir;
+        }
     }
     else if (est_h == 2 && est_v == 2)
     {
         direction.dir = "center";
+        if(direction.last_dir != "center")
+        {
+            direction.last_dir = direction.dir;
+        }
     }
     else if (est_h == 3 && est_v == 2)
     {
         direction.dir = "Right";
-        if(_Event_R != NULL)
+        if(_Event_R != NULL && direction.last_dir != "Right")
+        {
             _Event_R();
+            direction.last_dir = direction.dir;
+        }
     }
     else if(est_h == 2 && est_v == 1)
     {
         direction.dir = "Down";
-        if(_Event_D != NULL)
+        if(_Event_D != NULL && direction.last_dir != "Down")
+        {
             _Event_D();
+            direction.last_dir = direction.dir;
+        }
     }
     else if(est_h == 2 && est_v == 3)
     {
         direction.dir = "Up";
-        if(_Event_U != NULL)
+        if(_Event_U != NULL && direction.last_dir != "Up")
+        {
             _Event_U();
+            direction.last_dir = direction.dir;
+        }
     }
     else if(est_h == 1 && est_v == 1)
     {
         direction.dir = "DownLeft";
-        if(_Event_DL != NULL)
+        if(_Event_DL != NULL && direction.last_dir != "DownLeft")
+        {
             _Event_DL();
+            direction.last_dir = direction.dir;
+        }
     }
     else if(est_h == 3 && est_v == 1)
     {
         direction.dir = "DownRight";
-        if(_Event_DR != NULL)
+        if(_Event_DR != NULL && direction.last_dir != "DownRight")
+        {
             _Event_DR();
+            direction.last_dir = direction.dir;
+        }
     }
     else if(est_h == 1 && est_v == 3)
     {
         direction.dir = "UpLeft";
-        if(_Event_UL != NULL)
+        if(_Event_UL != NULL && direction.last_dir != "UpLeft")
+        {
             _Event_UL();
+            direction.last_dir = direction.dir;
+        }
+
     }
     else if(est_h == 3 && est_v == 3)
     {
         direction.dir = "UpRight";
-        if(_Event_UR != NULL)
+        if(_Event_UR != NULL && direction.last_dir != "UpRight")
+        {
             _Event_UR();
+            direction.last_dir = direction.dir;
+        }   
     }
+
 }
 
 void Joystick::onEvent_Left(onLeft funcEventLeft)
