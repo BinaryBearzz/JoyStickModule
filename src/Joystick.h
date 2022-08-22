@@ -30,18 +30,11 @@ class Joystick
         int pinSW;
         int lastStateSW = false;
         int currentStateSW;
-        int offset_x_min;
-        int offset_x_max;
-        int offset_y_min;
-        int offset_y_max;
-        int offset_x_center;
-        int offset_y_center;
         void mapping_Direction(int h, int v);
     public:
         int est_horizontal();
         int est_vertical();
         Joystick(int pinVRX = -1, int pinVRY = -1, int SW = -1);
-        void offsetPosition(int x_min, int x_max, int y_min, int y_max, int x_center, int y_center);
         void begin();  
 
         POSITION position;
