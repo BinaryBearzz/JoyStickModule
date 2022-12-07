@@ -49,7 +49,7 @@ class Joystick
         void onEvent_UpLeft(onUpLeft funcEventUpLeft);
         void onEvent_UpRight(onUpRight funcEventUpRight);
         void onEvent_DownLeft(onDownLeft funcEventDownLeft);
-        void onEvent_DonwRight(onDownRight funcEventDownRight);
+        void onEvent_DownRight(onDownRight funcEventDownRight);
 
         void onEvent(onLeft funcEventLeft, onRight funcEventRight, onUp funcEventUp, onDown funcEventDown, onSW funcEventSW = NULL);
     protected:
