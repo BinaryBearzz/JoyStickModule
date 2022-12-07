@@ -88,7 +88,6 @@ int Joystick::est_vertical()
     }
     return a;
 }
-
 void Joystick::mapping_Direction(int h, int v)
 {
     int est_h = h;
@@ -119,7 +118,7 @@ void Joystick::mapping_Direction(int h, int v)
             direction.last_dir = direction.dir;
         }
     }
-    else if(est_h == 2 && est_v == 1)
+    else if(est_h == 2 && est_v == 3)
     {
         direction.dir = "Down";
         if(_Event_D != NULL && direction.last_dir != "Down")
@@ -128,7 +127,7 @@ void Joystick::mapping_Direction(int h, int v)
             direction.last_dir = direction.dir;
         }
     }
-    else if(est_h == 2 && est_v == 3)
+    else if(est_h == 2 && est_v == 1)
     {
         direction.dir = "Up";
         if(_Event_U != NULL && direction.last_dir != "Up")
@@ -137,7 +136,7 @@ void Joystick::mapping_Direction(int h, int v)
             direction.last_dir = direction.dir;
         }
     }
-    else if(est_h == 1 && est_v == 1)
+    else if(est_h == 1 && est_v == 3)
     {
         direction.dir = "DownLeft";
         if(_Event_DL != NULL && direction.last_dir != "DownLeft")
@@ -146,7 +145,7 @@ void Joystick::mapping_Direction(int h, int v)
             direction.last_dir = direction.dir;
         }
     }
-    else if(est_h == 3 && est_v == 1)
+    else if(est_h == 3 && est_v == 3)
     {
         direction.dir = "DownRight";
         if(_Event_DR != NULL && direction.last_dir != "DownRight")
@@ -155,7 +154,7 @@ void Joystick::mapping_Direction(int h, int v)
             direction.last_dir = direction.dir;
         }
     }
-    else if(est_h == 1 && est_v == 3)
+    else if(est_h == 1 && est_v == 1)
     {
         direction.dir = "UpLeft";
         if(_Event_UL != NULL && direction.last_dir != "UpLeft")
@@ -165,7 +164,7 @@ void Joystick::mapping_Direction(int h, int v)
         }
 
     }
-    else if(est_h == 3 && est_v == 3)
+    else if(est_h == 3 && est_v == 1)
     {
         direction.dir = "UpRight";
         if(_Event_UR != NULL && direction.last_dir != "UpRight")
@@ -176,7 +175,6 @@ void Joystick::mapping_Direction(int h, int v)
     }
 
 }
-
 void Joystick::onEvent_Left(onLeft funcEventLeft)
 {
     _Event_L = funcEventLeft;
@@ -211,7 +209,7 @@ void Joystick::onEvent_DownLeft(onDownLeft funcEventDownLeft)
 {
     _Event_DL = funcEventDownLeft;
 }
-void Joystick::onEvent_DonwRight(onDownRight funcEventDownRight)
+void Joystick::onEvent_DownRight(onDownRight funcEventDownRight)
 {
     _Event_DR = funcEventDownRight;
 }
