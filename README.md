@@ -3,6 +3,5 @@
   test working on ESP32 only if use other board suggest offset value in function Joystick::handle()
       adjust range analogread from 0, 4096 to 0, 1024 or 0, 2048 up to you(board support)  position.x = map((aPinX), 0, 4096, -6, 6);
                                                                             position.y = map((aPinY), 0, 4096, -6, 6);
- ![Uploading image.png…]()
 
-[/font][/size]
+![alt text]([http://url/to/img.png](https://pin.it/1cPD9d0))
