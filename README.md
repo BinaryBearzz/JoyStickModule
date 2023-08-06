@@ -1,3 +1,4 @@
+![Library Version](https://img.shields.io/badge/Version-1.0.2-green)
 # JoyStickModule
   this library make for using joystick module  5pin  such as gnd, 5v(recommend connect on Pin 3v3), vrX, vrY, sw
   test working on ESP32 only if use other board suggest offset value in function Joystick::handle() provide Callback function on any events trigger by joy stick module
